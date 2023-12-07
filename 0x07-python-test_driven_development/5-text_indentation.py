@@ -1,40 +1,45 @@
 #!/usr/bin/python3
-"""
-This module defines `text_indentation`
-The function prints a text with 2 new lines after each of
-these characters: ., ? and :
-"""
 
 
 def text_indentation(text):
-    """splits a text into lines along "?", ":", "." followed by 2 new lines
+    """Prints two new lines after
+    characters: ., ? and :
     Args:
-        text: input string
-    Returns:
-        No return
+        text (str): string text
     Raises:
-        TypeError: If text is not a string
+        TypeError: if `text` is not string
     """
-
-    if type(text) is not str:
+    if not isinstance(text, str):
         raise TypeError("text must be a string")
-    flag = 0
-    a = 0
-    while a < len(text):
-        if flag == 0:
-            if text[a] == ' ':
-                a += 1
-                continue
-            else:
-                flag = 1
-        if flag == 1:
-            if text[a] == '?' or text[a] == '.' or text[a] == ':':
-                print(text[a])
-                print()
-                flag = 0
-            else:
-                if text[a + 1] == '\n':
-                     a += 1
-                     continue 
-                print(text[a], end="")
-           a += 1
+    string = ''
+    i = 0
+    while i < len(text):
+        string += text[i]
+        if text[i] in ['.', '?', ':']:
+            string = string.strip()
+            print(string + '\n')
+            try:
+                if text[i + 1] == ' ':
+                    i += 1
+            except IndexError:
+                pass
+            string = ''
+        i += 1
+
+    if len(string) > 0:
+        print(string, end="")
+
+
+if __name__ == '__main__':
+    text_indentation("Lorem amet? consectetur adipiscing elit. Quonam: modo")
+    print()
+    text_indentation("text without characters")
+    print()
+    text_indentation("")
+    print()
+    text_indentation("hello.there")
+    print()
+    text_indentation("hello.")
+    print()
+    text_indentation("Holberton. School? How are you: John")
+    print()
